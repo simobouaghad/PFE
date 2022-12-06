@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listnote{% endblock %}
+
+{% block body %}
+    <h1>Listnote</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ listnote.id }}</td>
+            </tr>
+            <tr>
+                <th>Cne</th>
+                <td>{{ listnote.cne }}</td>
+            </tr>
+            <tr>
+                <th>Ds1</th>
+                <td>{{ listnote.ds1 }}</td>
+            </tr>
+            <tr>
+                <th>Ds2</th>
+                <td>{{ listnote.ds2 }}</td>
+            </tr>
+            <tr>
+                <th>Ds3</th>
+                <td>{{ listnote.ds3 }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ listnote.total }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_listnote_index') }}">back to list</a>
+
+    <a href="{{ path('app_listnote_edit', {'id': listnote.id}) }}">edit</a>
+
+    {{ include('listnote/_delete_form.html.twig') }}
+{% endblock %}

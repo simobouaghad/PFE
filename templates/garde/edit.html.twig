@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Garde{% endblock %}
+
+{% block body %}
+
+    <div class="edit-head" style="width: 96%; margin: 0 auto; display: flex; align-items: center; margin-bottom: 20px;">
+        <h1 style="color: #3378F1; font: 600; width: 96%; font-weight: 600;">Edit le garde générale</h1>
+        {{ include('garde/_delete_form.html.twig') }}
+    </div>
+    
+    {{ include('garde/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    
+{% endblock %}

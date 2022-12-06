@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matire{% endblock %}
+
+{% block body %}
+    <h1>Matire</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Image</th>
+                <td>{{ matire.image }}</td>
+            </tr>
+
+            <tr>
+                <th>Id</th>
+                <td>{{ matire.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ matire.name }}</td>
+            </tr>
+
+            <tr>
+                <th>Centre</th>
+                <td>{{ matire.centre }}</td>
+            </tr>
+
+            <tr>
+                <th>Categorie</th>
+                <td>{{ matire.category }}</td>
+            </tr>
+
+            <tr>
+                <th>Sous Categorie</th>
+                <td>{{ matire.sousCategory }}</td>
+            </tr>
+
+            <tr>
+                <th>Description</th>
+                <td>{{ matire.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_matire_index') }}">back to list</a>
+
+    <a href="{{ path('app_matire_edit', {'id': matire.id}) }}">edit</a>
+
+    {{ include('matire/_delete_form.html.twig') }}
+{% endblock %}

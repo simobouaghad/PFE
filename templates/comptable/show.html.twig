@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comptable{% endblock %}
+
+{% block body %}
+
+    <div class="edit-head" style="width: 96%; margin: 0 auto; display: flex; align-items: center;">
+        <h1 style="color: #3378F1; font: 600; width: 96%; font-weight: 600;">Page du Comptable</h1>
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 15%;">
+            <a href="{{ path('app_comptable_edit', {'id': comptable.id}) }}"><i class="icon-pencil7" style="font-size: 25px; color: #4caf50;"></i></a>
+            {{ include('comptable/_delete_form.html.twig') }}
+        </div>
+    </div>
+
+
+    <table class="table" style="margin: 0 auto; width: 80%; text-align: center;">
+
+        <div style="width: 100%; display: flex; justify-content: center;">
+            <img style="width: 150px; border-radius: 50%; margin-bottom: 10px;" src={{ asset('uploads/images/' ~ comptable.image) }}>
+        </div>
+        <tbody style="border: 1px solid #dddfe2;">
+            <tr>
+                <th>Id</th>
+                <td>{{ comptable.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ comptable.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ comptable.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ comptable.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ comptable.cin }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ comptable.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ comptable.email }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ comptable.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Salary</th>
+                <td>{{ comptable.salary }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+{% endblock %}

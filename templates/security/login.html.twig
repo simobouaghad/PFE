@@ -1,0 +1,130 @@
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    <!-- Global stylesheets -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="../../../../global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/layout.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/components.min.css" rel="stylesheet" type="text/css">
+	<link href="assets/css/colors.min.css" rel="stylesheet" type="text/css">
+    <!-- /global stylesheets -->
+    
+{% endblock %}
+
+
+{% block body %}
+
+<div class="page-content">
+	<div class="content-wrapper">
+    {% if error %}
+        <div class="alert alert-danger" style="text-align: center;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {# {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %} #}
+        <div class="content d-flex justify-content-center align-items-center">
+            <form class="login-form" method="post">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="../../../../global_assets/images/admigha.png" class="#" style="width: 40%; border-radius: 50%;">
+                            <h5 class="mb-0">Login to your account</h5>
+                            <span class="d-block text-muted">Enter your credentials below</span>
+                        </div>
+
+                        <div class="form-group form-group-feedback form-group-feedback-left">
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"  placeholder="Email" autocomplete="email" required autofocus>
+                            <div class="form-control-feedback">
+                                <i class="icon-user text-muted" style="margin-top: 10px"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group form-group-feedback form-group-feedback-left">
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" autocomplete="current-password" required>
+                            <div class="form-control-feedback">
+                                <i class="icon-lock2 text-muted" style="margin-top: 10px"></i>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block" type="submit">Sign in <i class="icon-circle-right2 ml-2"></i></button>
+                        </div>
+
+                        <div class="text-center">
+                            <a href="login_password_recover.html">Forgot password?</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+			<div class="navbar navbar-expand-lg navbar-light">
+				<div class="text-center d-lg-none w-100">
+					<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+						<i class="icon-unfold mr-2"></i>
+						Footer
+					</button>
+				</div>
+
+				<div class="navbar-collapse collapse" id="navbar-footer">
+					<span class="navbar-text">
+						&copy; 2021 - 2022. <a href="https://big4com.com/">BIG4COM</a> by <a href="https://mohamedbouaghad.github.io/my-portfolio-site/" target="_blank">Mohamed Bouaghad</a>
+					</span>
+
+					<ul class="navbar-nav ml-lg-auto">
+						<li class="nav-item"><a href="https://big4com.com/contact.html" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
+						<li class="nav-item"><a href="#" class="navbar-nav-link" target="_blank"><i class="icon-file-text2 mr-2"></i> Docs</a></li>
+						<li class="nav-item"><a href="#" class="navbar-nav-link font-weight-semibold"><span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Purchase</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- /footer -->
+    </div>
+</div>
+
+
+{# <form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+    <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+    > #}
+
+    {#
+        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+        See https://symfony.com/doc/current/security/remember_me.html
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Remember me
+            </label>
+        </div>
+   
+
+    <button class="btn btn-lg btn-primary" type="submit">
+        Sign in
+    </button>
+</form> #}
+{% endblock %}

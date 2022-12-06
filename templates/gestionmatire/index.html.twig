@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion_matire{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Gestion des matières</h1>
+        <a href="{{ path('app_gestionmatire_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    {# admin #}
+    {% if is_granted('ROLE_ADMIN') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>matière</th>
+                <th>professeur</th>
+                <th>groupe</th>
+                <th>sous category</th>
+                <th>category</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gestionmatire in gestionmatires %}
+            <tr style="text-align: center;">
+                <td>{{ gestionmatire.matire }}</td>
+                <td>{{ gestionmatire.prof.nom }} {{ gestionmatire.prof.prenom }} </td>
+                <td>{{ gestionmatire.groupe }}</td>
+                <td>{{ gestionmatire.souscategory }}</td>
+                <td>{{ gestionmatire.category }}</td>
+                <td class="action" style="width: 60%;">
+                    <a href="{{ path('app_gestionmatire_edit', {'id': gestionmatire.id}) }}"><i class="icon-pencil7"></i></a>
+                    {{ include('gestionmatire/_delete_form.html.twig') }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% elseif  is_granted('ROLE_DIRECTEUR') %}
+    {# directeur #}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>matière</th>
+                <th>professeur</th>
+                <th>groupe</th>
+                <th>sous category</th>
+                <th>session</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gestionmatire in gestionmatires %}
+            {% if gestionmatire.centre == app.user.centre %}
+                <tr style="text-align: center;">
+                    <td>{{ gestionmatire.matire }}</td>
+                    <td>{{ gestionmatire.prof.nom }} {{ gestionmatire.prof.prenom }} </td>
+                    <td>{{ gestionmatire.groupe }}</td>
+                    <td>{{ gestionmatire.souscategory }}</td>
+                    <td>{{ gestionmatire.session }}</td>
+                    <td class="action" style="width: 60%;">
+                        <a href="{{ path('app_gestionmatire_edit', {'id': gestionmatire.id}) }}"><i class="icon-pencil7"></i></a>
+                        {{ include('gestionmatire/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listpayment index{% endblock %}
+
+{% block body %}
+    <h1>Listpayment index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>From_</th>
+                <th>To_</th>
+                <th>Status</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for listpayment in listpayments %}
+            <tr>
+                <td>{{ listpayment.name }}</td>
+                <td>{{ listpayment.from }}</td>
+                <td>{{ listpayment.to }}</td>
+                <td>{{ listpayment.status }}</td>
+                <td>{{ listpayment.prix }}</td>
+                <td>
+                    <a href="{{ path('app_listpayment_show', {'id': listpayment.id}) }}">show</a>
+                    <a href="{{ path('app_listpayment_edit', {'id': listpayment.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_listpayment_new') }}">Create new</a>
+{% endblock %}

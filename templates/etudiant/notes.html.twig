@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}notes{% endblock %}
+
+{% block body %}
+
+    <div style="border-radius: 4px; display: flex; justify-content: space-between; padding: 10px; margin-bottom: 5px; width: 100%;border: 1px solid #dddfe2;">
+        <form class="session-content" style='width: 85%;'>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Session :</label>
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <select id="etudiant_session" class="form-control" required="required">
+                                    <option value=''></option>
+                                    {% for session in sessions %}
+                                        <option value="{{session.id}}"> {{session.name}} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Semestre :</label>
+                        <div class="form-group row">
+                            <div class="col-lg-12">
+                                <select id="etudiant_semestre" class="form-control" required="required">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div id="notes_page" style='display: flex; align-items: center;'>
+            <a href="#" class="btn btn-primary" style="margin-top: 6px;">search<i class="icon-paperplane ml-2"></i></a>
+        </div>
+
+        <script src="/global_assets/js/main/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script>
+            $('.session-content').on('change', '#etudiant_session', function(e) {
+                $.ajax({
+                    accepts: 'application/json',
+                    url: '{{ path('etudiant_semestre') }}',
+                    type: 'POST',
+                    data: {
+                        "session": $("#etudiant_session").val(),
+                    },
+
+                    success: function (request) {
+                        $('#etudiant_semestre option')
+                            .remove();
+                        $('#etudiant_semestre')
+                            .append('<option value=""></option>')
+                        for (i = 0; i < request.length; i++) {
+                            $('#etudiant_semestre')
+                                .append('<option value="'+request[i].id+'">'+request[i].name+'</option>')
+                            }
+                        },
+                    });
+            });
+
+            $('.session-content').on('change', '#etudiant_semestre', function(e) {
+                $('#notes_page a')
+                    .remove();
+                $('#notes_page')
+                    .append('<a href="http://127.0.0.1:8000/semestre/' +$("#etudiant_semestre").val()+ '/note" class="btn btn-primary" style="margin-top: 6px;">search<i class="icon-paperplane ml-2"></i</a>')
+            });
+        </script>
+    </div>
+
+    <div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    
+        <div style="margin: 0 auto; display: flex; justify-content: space-between; padding: 10px; margin-bottom: 5px; width: 100%;border: 1px solid #dddfe2;">
+            {% for etudiant in etudiants %}
+                {% if etudiant.cne == app.user.cne %}
+                    <div style="padding: 10px; margin-bottom: 5px;">
+                        <div><span style="font-weight: 600;">école : </span>E-learning</div>
+                        <div><span style="font-weight: 600;">Centre : </span>{{etudiant.centre}}</div>
+                        <div><span style="font-weight: 600;">Niveau : </span>{{etudiant.sousCategory}}</div>
+                        <div><span style="font-weight: 600;">Groupe : </span>{{etudiant.groupe}}</div>
+                    </div>
+
+                    <div style=" margin-bottom: 5px;">
+                        <img src="../../../../global_assets/images/admigha.png" style="width: 100px; border-radius: 50%;" />
+                    </div>
+
+                    <div style="padding: 10px; margin-bottom: 5px;">
+                        <div><span style="font-weight: 600;">étudiant : </span>{{app.user.nomuser}}</div>
+                        <div><span style="font-weight: 600;">session : </span>{{semestre.session}}</div>
+                        <div><span style="font-weight: 600;">semestre : </span>{{semestre.nom}}</div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                    <th>Matière</th>
+                    <th>devoir 1</th>
+                    <th>devoir 2</th>
+                    <th>devoir 3</th>
+                    <th>devoir 4</th>
+                    <th>TD/TP</th>
+                    <th>Totale</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for list_note in list_notes %}
+                {% for gestionmatire in gestionmatires %}
+                    {% for etudiant in etudiants %}
+                        {% if list_note.cne == app.user.cne and 
+                        etudiant.cne == app.user.cne and 
+                        etudiant.groupe == gestionmatire.groupe and
+                        list_note.matire == gestionmatire.matire and 
+                        semestre.session == gestionmatire.session and 
+                        list_note.semestre == semestre and
+                        semestre.session == list_note.session
+                    %}
+                            <tr style="text-align: center;">
+                                <td>{{ list_note.matire }}</td>
+                                <td>{{ list_note.ds1 }}</td>
+                                <td>{{ list_note.ds2 }}</td>
+                                <td>{{ list_note.ds3 }}</td>
+                                <td>{{ list_note.ds4 }}</td>
+                                <td>{{ list_note.activite }}</td>
+                                <td style="color: #4caf50;">{{ list_note.total }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

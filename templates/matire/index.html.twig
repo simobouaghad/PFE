@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matiere index{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Matières</h1>
+        <a href="{{ path('app_matire_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    {# admin #}
+    {% if is_granted('ROLE_ADMIN') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Id</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Categorie</th>
+                <th>Sous Categorie</th>
+                <th>Centre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matire in matires %}
+            <tr style="text-align: center;">
+                <td>{{ matire.id }}</td>
+                <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ matire.image) }}></td>
+                <td>{{ matire.name }}</td>
+                <td>{{ matire.category }}</td>
+                <td>{{ matire.sousCategory }}</td>
+                <td>{{ matire.centre }}</td>
+                <td class="action" style="width: 60%;">
+                    <a href="{{ path('app_matire_edit', {'id': matire.id}) }}" style="margin-top: 4px;"><i class="icon-pencil7"></i></a>
+                    <a style="margin-top: 4px;">{{ include('matire/_delete_form.html.twig') }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# directeur #}
+    {% elseif  is_granted('ROLE_DIRECTEUR') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Id</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Categorie</th>
+                <th>Sous Categorie</th>
+                <th>Centre</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for matire in matires %}
+            {% if matire.centre == app.user.centre %}
+                <tr style="text-align: center;">
+                    <td>{{ matire.id }}</td>
+                    <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ matire.image) }}></td>
+                    <td>{{ matire.name }}</td>
+                    <td>{{ matire.category }}</td>
+                    <td>{{ matire.sousCategory }}</td>
+                    <td>{{ matire.centre }}</td>
+                    <td class="action" style="width: 60%;">
+                        <a href="{{ path('app_matire_edit', {'id': matire.id}) }}" style="margin-top: 4px;"><i class="icon-pencil7"></i></a>
+                        <a style="margin-top: 4px;">{{ include('matire/_delete_form.html.twig') }}</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>
+
+{% endblock %}

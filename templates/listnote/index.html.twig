@@ -1,0 +1,44 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Listnote index{% endblock %}
+
+{% block body %}
+    <h1>Listnote index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cne</th>
+                <th>Ds1</th>
+                <th>Ds2</th>
+                <th>Ds3</th>
+                <th>Total</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for listnote in listnotes %}
+            <tr>
+                <td>{{ listnote.id }}</td>
+                <td>{{ listnote.cne }}</td>
+                <td>{{ listnote.ds1 }}</td>
+                <td>{{ listnote.ds2 }}</td>
+                <td>{{ listnote.ds3 }}</td>
+                <td>{{ listnote.total }}</td>
+                <td>
+                    <a href="{{ path('app_listnote_show', {'id': listnote.id}) }}">show</a>
+                    <a href="{{ path('app_listnote_edit', {'id': listnote.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_listnote_new') }}">Create new</a>
+{% endblock %}

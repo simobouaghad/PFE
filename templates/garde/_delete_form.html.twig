@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_garde_delete', {'id': garde.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ garde.id) }}">
+    <button class="btn" style="background-color: red; color: #fff;">Delete <i class="icon-bin ml-2"></i></button>
+</form>

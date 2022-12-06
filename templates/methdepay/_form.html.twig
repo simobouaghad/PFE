@@ -1,0 +1,43 @@
+{{ form_start(form) }}
+<div style="box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2;; margin: 0 auto; padding: 20px; width: 96%;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Méthode :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.methode, {'attr': {'class':'form-control', 'placeholder': 'Entrer le nom de ville'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Centre :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.centre, {'attr': {'class':'form-control', 'placeholder': 'Entrer le code postale'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-right">
+		<button type="submit" class="btn btn-primary">{{ button_label|default('Save') }} <i class="icon-paperplane ml-2"></i></button>
+	</div>
+</div>
+{{ form_end(form) }}
+
+    {% if is_granted('ROLE_COMPTABLE') %}
+        <option id="centreID" style="display: none;">{{app.user.centre.id}}</option>
+        <option id="centreName" style="display: none;">{{app.user.centre.name}}</option>
+        <script>
+            $('#methdepay_centre option')
+                .remove();
+            $('#methdepay_centre')
+                .append('<option value=""></option>')
+            $('#methdepay_centre')
+                .append('<option value="'+$('#centreID').val()+'">'+$('#centreName').val()+'</option>')
+        </script>
+    {% endif %}

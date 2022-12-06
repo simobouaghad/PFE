@@ -1,0 +1,28 @@
+.action {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 40%;
+}
+
+.action a .icon-pencil7 {
+    font-size: 20px;
+    color: #4caf50;
+}
+
+.action a .icon-trash-alt {
+    font-size: 20px;
+    color: red;
+}
+
+.action a .icon-users2,
+.action a .icon-eye2 {
+    font-size: 20px;
+    color: #5c6bc0;
+}
+
+.action a .icon-users {
+    font-size: 20px;
+    color: #2196F3;
+}

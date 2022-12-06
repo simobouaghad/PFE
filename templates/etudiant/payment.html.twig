@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listpayment index{% endblock %}
+
+{% block body %}
+    
+
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;"><span style="font-size: 20px;">les paiements du :<span> {{ etudiant.nom }} {{etudiant.prenom}}</h1>
+    </div>
+    
+    <table class="table" style="border: 1px solid #b7b7b7;">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px;;">
+                <th>Etape</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Prix</th>
+                <th>Status</th>
+                <th style="text-align: center;">actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pay in payments %}
+            <tr>
+                <td>{{ pay.name }}</td>
+                <td style="color: #4caf50;">{{ pay.from }}</td>
+                <td style="color: #f44336;">{{ pay.to }}</td>
+                <td>{{ pay.prix }} dh</td>
+                {% if pay.status == 'non payée' %}
+                    <td><span class="badge badge-danger">{{ pay.status }}</span></td>
+                {% endif %}
+
+                {% if pay.status == 'payée' %}
+                    <td><span class="badge badge-success">{{ pay.status }}</span></td>
+                {% endif %}
+
+                <td class="action" style="width:80%; display: flex; justify-content: space-between;">
+                    <a href="{{ path('app_listpayment_show', {'id': pay.id}) }}"><i class="icon-printer" style="font-size: 22px; color: red;"></i></a>
+                    <a href="{{ path('app_listpayment_edit', {'id': pay.id}) }}"><i class="icon-pencil7"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

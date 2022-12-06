@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Directeur{% endblock %}
+
+{% block body %}
+
+    <div class="edit-head" style="width: 96%; margin: 0 auto; display: flex; align-items: center;">
+        <h1 style="color: #3378F1; font: 600; width: 96%; font-weight: 600;">Page du Directeur</h1>
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 15%;">
+            <a href="{{ path('app_directeur_edit', {'id': directeur.id}) }}"><i class="icon-pencil7" style="font-size: 25px; color: #4caf50;"></i></a>
+            {{ include('directeur/_delete_form.html.twig') }}
+        </div>
+    </div>
+
+    <table class="table" style="margin: 0 auto; width: 80%; text-align: center;">
+        <div style="width: 100%; display: flex; justify-content: center;">
+            <img style="width: 150px; border-radius: 50%; margin-bottom: 10px;" src={{ asset('uploads/images/' ~ directeur.image) }}>
+        </div>
+        <tbody style="border: 1px solid #dddfe2;">
+            <tr>
+                <th>Nom</th>
+                <td>{{ directeur.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ directeur.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ directeur.sexe }}</td>
+            </tr>
+            <tr>
+                <th>CIN</th>
+                <td>{{ directeur.CIN }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ directeur.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ directeur.email }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ directeur.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Salaire</th>
+                <td>{{ directeur.salary }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    
+{% endblock %}

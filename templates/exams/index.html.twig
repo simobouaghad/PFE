@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exams index{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Les filières</h1>
+        <a href="{{ path('app_exams_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    {% if is_granted('ROLE_DIRECTEUR') %}
+        <div class="content">
+            <div class="row">
+                {% for category in categories %}
+                    {% if category.centre == app.user.centre %}
+                        <a href="{{ path('get_app_sousCategories', {'id': category.id}) }}" class="col-xl-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-img-actions">
+                                    <img class="card-img-top img-fluid" src="/uploads/images/{{category.image}}" alt="">
+                                </div>
+                                <div class="card-body text-center">
+                                    <h6 class="font-weight-semibold mb-0">{{category.name}}</h6>
+                                    <span class="d-block text-muted">{{category.centre}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="content">
+            <div class="row">
+                {% for category in categories %}
+                    <a href="{{ path('get_app_sousCategories', {'id': category.id}) }}" class="col-xl-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-img-actions">
+                                <img class="card-img-top img-fluid" src="/uploads/images/{{category.image}}" alt="">
+                            </div>
+                            <div class="card-body text-center">
+                                <h6 class="font-weight-semibold mb-0">{{category.name}}</h6>
+                                    <span class="d-block text-muted">{{category.centre}}</span>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

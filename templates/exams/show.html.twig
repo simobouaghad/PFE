@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exams{% endblock %}
+
+{% block body %}
+    <h1>Exams</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ exam.id }}</td>
+            </tr>
+            <tr>
+                <th>Examplan</th>
+                <td>{{ exam.examplan }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_exams_index') }}">back to list</a>
+
+    <a href="{{ path('app_exams_edit', {'id': exam.id}) }}">edit</a>
+
+    {{ include('exams/_delete_form.html.twig') }}
+{% endblock %}

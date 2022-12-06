@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <!-- Global stylesheets -->
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+            <link href="/global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+            <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+            <link href="/assets/css/bootstrap_limitless.min.css" rel="stylesheet" type="text/css">
+            <link href="/assets/css/layout.min.css" rel="stylesheet" type="text/css">
+            <link href="/assets/css/components.min.css" rel="stylesheet" type="text/css">
+            <link href="/assets/css/colors.min.css" rel="stylesheet" type="text/css">
+            <link href="/assets/css/stl.css" rel="stylesheet" type="text/css">
+            <!-- /global stylesheets -->
+            <link href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <!-- Core JS files -->
+            <script src="/global_assets/js/main/jquery.min.js"></script>
+            <script src="/global_assets/js/main/bootstrap.bundle.min.js"></script>
+            <script src="/global_assets/js/plugins/loaders/blockui.min.js"></script>
+            <!-- /core JS files -->
+
+            <!-- Theme JS files -->
+            <script src="/global_assets/js/plugins/visualization/d3/d3.min.js"></script>
+            <script src="/global_assets/js/plugins/visualization/d3/d3_tooltip.js"></script>
+            <script src="/global_assets/js/plugins/forms/styling/switchery.min.js"></script>
+            <script src="/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
+            <script src="/global_assets/js/plugins/ui/moment/moment.min.js"></script>
+            <script src="/global_assets/js/plugins/pickers/daterangepicker.js"></script>
+            <script src="/global_assets/js/plugins/ui/perfect_scrollbar.min.js"></script>
+
+            <script src="/assets/js/app.js"></script>
+            <script src="/global_assets/js/demo_pages/dashboard.js"></script>
+            <script src="/global_assets/js/demo_pages/layout_fixed_sidebar_custom.js"></script>
+
+            <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+            <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    $('#example').DataTable();
+                } );
+            </script>
+        {% endblock %}
+    </head>
+    
+    
+    <body class="navbar-top" style='background-color: #fff;'>
+        <!-- Main navbar -->
+        <div class="navbar navbar-expand-md navbar-dark fixed-top">
+            <div class="navbar-brand">
+                <a href="index.html" class="d-inline-block">
+                    <img src="../../../../global_assets/images/logo_light.png" alt="">
+                </a>
+            </div>
+
+            <div class="d-md-none">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+                    <i class="icon-tree5"></i>
+                </button>
+                <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+                    <i class="icon-paragraph-justify3"></i>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbar-mobile">
+            
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
+                            <i class="icon-paragraph-justify3"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                            <i class="icon-git-compare"></i>
+                            <span class="d-md-none ml-2">Git updates</span>
+                            <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">9</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-content wmin-md-350">
+                            <div class="dropdown-content-header">
+                                <span class="font-weight-semibold">Git updates</span>
+                                <a href="#" class="text-default"><i class="icon-sync"></i></a>
+                            </div>
+
+                            <div class="dropdown-content-body dropdown-scrollable">
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <div class="mr-3">
+                                            <a href="#" class="btn bg-transparent border-primary text-primary rounded-round border-2 btn-icon"><i class="icon-git-pull-request"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            Drop the IE <a href="#">specific hacks</a> for temporal inputs
+                                            <div class="text-muted font-size-sm">4 minutes ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="mr-3">
+                                            <a href="#" class="btn bg-transparent border-warning text-warning rounded-round border-2 btn-icon"><i class="icon-git-commit"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            Add full font overrides for popovers and tooltips
+                                            <div class="text-muted font-size-sm">36 minutes ago</div>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="mr-3">
+                                            <a href="#" class="btn bg-transparent border-info text-info rounded-round border-2 btn-icon"><i class="icon-git-branch"></i></a>
+                                        </div>
+
+                                        <div class="media-body">
+                                            <a href="#">Chris Arney</a> created a new <span class="font-weight-semibold">Design</span> branch
+                                            <div class="text-muted font-size-sm">2 hours ago</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="dropdown-content-footer bg-light">
+                                <a href="#" class="text-grey mr-auto">All updates</a>
+                                <div>
+                                    <a href="#" class="text-grey" data-popup="tooltip" title="Mark all as read"><i class="icon-radio-unchecked"></i></a>
+                                    <a href="#" class="text-grey ml-2" data-popup="tooltip" title="Bug tracker"><i class="icon-bug2"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
+                <span class="navbar-text ml-md-3 mr-md-auto">
+                    <span class="badge bg-success">Online</span>
+                </span>
+
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                            <i class="icon-people"></i>
+                            <span class="d-md-none ml-2">Users</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-300">
+                            <div class="dropdown-content-header">
+                                <span class="font-weight-semibold">Users online</span>
+                                <a href="#" class="text-default"><i class="icon-search4 font-size-base"></i></a>
+                            </div>
+
+                            <div class="dropdown-content-body dropdown-scrollable">
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <div class="mr-3">
+                                            <img src="../../../../global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-title font-weight-semibold">Jordana Ansley</a>
+                                            <span class="d-block text-muted font-size-sm">Lead web developer</span>
+                                        </div>
+                                        <div class="ml-3 align-self-center"><span class="badge badge-mark border-success"></span></div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="mr-3">
+                                            <img src="../../../../global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="#" class="media-title font-weight-semibold">Will Brason</a>
+                                            <span class="d-block text-muted font-size-sm">Marketing manager</span>
+                                        </div>
+                                        <div class="ml-3 align-self-center"><span class="badge badge-mark border-danger"></span></div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="dropdown-content-footer bg-light">
+                                <a href="#" class="text-grey mr-auto">All users</a>
+                                <a href="#" class="text-grey"><i class="icon-gear"></i></a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+                            <i class="icon-bubbles4"></i>
+                            <span class="d-md-none ml-2">Messages</span>
+                            <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">2</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
+                            <div class="dropdown-content-header">
+                                <span class="font-weight-semibold">Messages</span>
+                                <a href="#" class="text-default"><i class="icon-compose"></i></a>
+                            </div>
+
+                            <div class="dropdown-content-body dropdown-scrollable">
+                                <ul class="media-list">
+                                    <li class="media">
+                                        <div class="mr-3 position-relative">
+                                            <img src="../../../../global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                        </div>
+
+                                        <div class="media-body">
+                                            <div class="media-title">
+                                                <a href="#">
+                                                    <span class="font-weight-semibold">James Alexander</span>
+                                                    <span class="text-muted float-right font-size-sm">04:58</span>
+                                                </a>
+                                            </div>
+
+                                            <span class="text-muted">who knows, maybe that would be the best thing for me...</span>
+                                        </div>
+                                    </li>
+
+                                    <li class="media">
+                                        <div class="mr-3 position-relative">
+                                            <img src="../../../../global_assets/images/placeholders/placeholder.jpg" width="36" height="36" class="rounded-circle" alt="">
+                                        </div>
+
+                                        <div class="media-body">
+                                            <div class="media-title">
+                                                <a href="#">
+                                                    <span class="font-weight-semibold">Margo Baker</span>
+                                                    <span class="text-muted float-right font-size-sm">12:16</span>
+                                                </a>
+                                            </div>
+
+                                            <span class="text-muted">That was something he was unable to do because...</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="dropdown-content-footer justify-content-center p-0">
+                                <a href="#" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown dropdown-user">
+                        <a href="#" class="navbar-nav-link dropdown-toggle" data-toggle="dropdown">
+                            <img src="/uploads/images/{{app.user.image}}" class="rounded-circle" alt="">
+                            <span>{{ app.user.nomuser }}</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+                            <a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>
+                            <a href="{{ path('app_logout') }}" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /main navbar -->
+
+
+        <!-- Page content -->
+        <div class="page-content">
+
+            <!-- Main sidebar -->
+            <div class="sidebar sidebar-dark sidebar-main sidebar-fixed sidebar-expand-md">
+
+                <!-- Sidebar mobile toggler -->
+                <div class="sidebar-mobile-toggler text-center">
+                    <a href="#" class="sidebar-mobile-main-toggle">
+                        <i class="icon-arrow-left8"></i>
+                    </a>
+                    Navigation
+                    <a href="#" class="sidebar-mobile-expand">
+                        <i class="icon-screen-full"></i>
+                        <i class="icon-screen-normal"></i>
+                    </a>
+                </div>
+                <!-- /sidebar mobile toggler -->
+
+
+                <!-- Sidebar content -->
+                <div class="sidebar-content">
+
+                    <!-- User menu -->
+                    <div class="sidebar-user">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="mr-3">
+                                    <a href="#"><img src="../../../../global_assets/images/admigha.png" width="40" height="40" class="rounded-circle" alt=""></a>
+                                </div>
+
+                                <div class="media-body">
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <div class="media-title font-weight-semibold">E-LEARNING</div>
+                                    {% else %}
+                                        <div class="media-title font-weight-semibold">{{ app.user.centre }}</div>
+                                    {% endif %}
+                                    <div class="font-size-xs opacity-50">
+                                        <i class="icon-pin font-size-sm"></i> &nbsp;Marrakech, Big4Com
+                                    </div>
+                                </div>
+
+                                <div class="ml-3 align-self-center">
+                                    <a href="#" class="text-white"><i class="icon-cog3"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /user menu -->
+
+
+                    <!-- Main navigation -->
+                    <div class="card card-sidebar-mobile">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <ul class="nav nav-sidebar" data-nav-type="accordion">
+
+                                <!-- Main -->
+                                <li class="nav-item-header">
+                                    <div class="text-uppercase font-size-xs line-height-xs">MAIN</div>
+                                    <i class="icon-menu" title="Main"></i>
+                                </li>
+                                <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="icon-home4"></i><span>Dashboard</span></a></li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-people"></i> <span>Utilisateurs</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/directeur" class="nav-link"><i class="icon-reading"></i> <span>Directeurs</span></a></li>
+                                        <li class="nav-item"><a href="/garde" class="nav-link"><i class="icon-user-check"></i> <span>Gardes générales</span></a></li>
+                                        <li class="nav-item"><a href="/comptable" class="nav-link"><i class="icon-user"></i> <span>Comptables</span></a></li>
+                                        <li class="nav-item"><a href="/etudiant" class="nav-link"><i class="icon-users"></i> <span>Etudiants</span></a></li>
+                                        <li class="nav-item"><a href="/professeur" class="nav-link"><i class="icon-user-tie"></i> <span>Professeurs</span></a></li>
+                                        <li class="nav-item"><a href="/employeur" class="nav-link"><i class="icon-vcard"></i> <span>Employées</span></a></li>
+                                    </ul>
+                                </li>
+                                {# <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-calendar52"></i> <span>Calendrier</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="#" class="nav-link"><i class="icon-calendar"></i> <span>Programmes d'études</span></a></li>
+                                        <li class="nav-item"><a href="#" class="nav-link"><i class="icon-calendar2"></i> <span>Calendrier</span></a></li>
+                                    </ul>
+                                </li> #}
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-cash3"></i> <span>Paiements</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/payement" class="nav-link"><i class="icon-cash2"></i> <span>Paiement d'étudiants</span></a></li>
+                                        <li class="nav-item"><a href="/methdepay" class="nav-link"><i class="icon-coin-dollar"></i> <span>Méthodes de paiement</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item"><a href="/lessons" class="nav-link"><i class="icon-graduation2"></i><span>Leçons</span></a></li>
+                                <li class="nav-item"><a href="/planning" class="nav-link"><i class="icon-hour-glass2"></i><span>Planning</span></a></li>
+                                <li class="nav-item"><a href="/exams" class="nav-link"><i class="icon-hour-glass3"></i><span>Planning d'exams</span></a></li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-book"></i> <span>Matières</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/gestionmatire" class="nav-link"><i class="icon-archive"></i> <span>Gestion de matières</span></a></li>
+                                        <li class="nav-item"><a href="/matire" class="nav-link"><i class="icon-books"></i> <span>Matières</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-certificate"></i> <span>Resultats</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/groupe/notes" class="nav-link"><i class="icon-certificate"></i> <span>Notes</span></a></li>
+                                        <li class="nav-item"><a href="#" class="nav-link"><i class="icon-file-text2"></i><span>Bulletins</span></a></li>
+                                    </ul>
+                                </li>
+                                {# <li class="nav-item"><a href="#" class="nav-link"><i class="icon-calendar52"></i> <span>Calendrier</span></a></li> #}
+                                <li class="nav-item"><a href="/ville" class="nav-link"><i class="icon-city"></i> <span>Villes</span></a></li>
+                                <li class="nav-item"><a href="/centre" class="nav-link"><i class="icon-office"></i> <span>Centres</span></a></li>
+                                <li class="nav-item"><a href="/category" class="nav-link"><i class="icon-grid5"></i> <span>Categories</span></a></li>
+                                <li class="nav-item"><a href="/sous/category" class="nav-link"><i class="icon-list"></i> <span>Sous Categories</span></a></li>
+                                <li class="nav-item"><a href="/groupe" class="nav-link"><i class="icon-users4"></i><span>Groupes</span></a></li>
+                                <li class="nav-item"><a href="/sale" class="nav-link"><i class="icon-library2"></i> <span>Sales</span></a></li>
+                                <li class="nav-item"><a href="/session" class="nav-link"><i class="icon-hour-glass2"></i> <span>Sessions</span></a></li>
+                                <li class="nav-item"><a href="/semestre" class="nav-link"><i class="icon-reset"></i> <span>Semestres</span></a></li>
+                                <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link"><i class="icon-switch2"></i> <span>Logout</span></a></li>
+
+                                {# <li class="nav-item"><a href="#" class="nav-link"><i class="icon-sphere"></i> <span>Publicité</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-calendar52"></i> <span>Planning</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-sphere"></i> <span>Calendrier</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-sphere"></i> <span>Notes</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-sphere"></i> <span>Absence</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-sphere"></i> <span>Exams</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-sphere"></i> <span>Documents</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-sphere"></i> <span>Notification</span></a></li> #}
+                                <!-- /main -->
+
+                                <!-- Layout -->
+                                {# <li class="nav-item-header">
+                                    <div class="text-uppercase font-size-xs line-height-xs">ADMINISTRATION</div> <i class="icon-menu" title="Layout options"></i>
+                                </li> #}
+                                <!-- /layout -->
+                            </ul>
+                        
+                        {% endif %}
+
+                        {% if is_granted('ROLE_DIRECTEUR') %}
+                            <ul class="nav nav-sidebar" data-nav-type="accordion">
+                                <li class="nav-item-header">
+                                    <div class="text-uppercase font-size-xs line-height-xs">MAIN</div>
+                                    <i class="icon-menu" title="Main"></i>
+                                </li>
+                                <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="icon-home4"></i><span>Dashboard</span></a></li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-people"></i> <span>Utilisateurs</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/etudiant" class="nav-link"><i class="icon-users"></i> <span>Etudiants</span></a></li>
+                                        <li class="nav-item"><a href="/professeur" class="nav-link"><i class="icon-user-tie"></i> <span>Professeurs</span></a></li>
+                                        <li class="nav-item"><a href="/garde" class="nav-link"><i class="icon-user-check"></i> <span>Garde générale</span></a></li>
+                                        <li class="nav-item"><a href="/comptable" class="nav-link"><i class="icon-user"></i> <span>Comptable</span></a></li>
+                                        <li class="nav-item"><a href="/employeur" class="nav-link"><i class="icon-vcard"></i> <span>Employées</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-book"></i> <span>Matières</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/gestionmatire" class="nav-link"><i class="icon-archive"></i> <span>Gestion de matières</span></a></li>
+                                        <li class="nav-item"><a href="/matire" class="nav-link"><i class="icon-books"></i> <span>Matières</span></a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-certificate"></i> <span>Resultats</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/groupe/notes" class="nav-link"><i class="icon-certificate"></i> <span>Notes</span></a></li>
+                                        <li class="nav-item"><a href="#" class="nav-link"><i class="icon-file-text2"></i><span>Bulletins</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item"><a href="/lessons" class="nav-link"><i class="icon-graduation2"></i><span>Leçons</span></a></li>
+                                <li class="nav-item"><a href="/planning" class="nav-link"><i class="icon-hour-glass2"></i><span>Planning</span></a></li>
+                                <li class="nav-item"><a href="/exams" class="nav-link"><i class="icon-hour-glass3"></i><span>Planning d'exams</span></a></li>
+                                <li class="nav-item"><a href="/category" class="nav-link"><i class="icon-grid5"></i> <span>Categories</span></a></li>
+                                <li class="nav-item"><a href="/sous/category" class="nav-link"><i class="icon-list"></i> <span>Sous Categories</span></a></li>
+                                <li class="nav-item"><a href="/groupe" class="nav-link"><i class="icon-users4"></i> <span>Groupes</span></a></li>
+                                <li class="nav-item"><a href="/sale" class="nav-link"><i class="icon-library2"></i> <span>Sales</span></a></li>
+                                <li class="nav-item"><a href="/session" class="nav-link"><i class="icon-hour-glass2"></i> <span>Sessions</span></a></li>
+                                <li class="nav-item"><a href="/semestre" class="nav-link"><i class="icon-reset"></i> <span>Semestres</span></a></li>
+                                <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link"><i class="icon-switch2"></i> <span>Logout</span></a></li>
+                            
+                                <!-- /main -->
+
+                                <!-- Layout -->
+                                <li class="nav-item-header">
+                                    <div class="text-uppercase font-size-xs line-height-xs">ADMINISTRATION</div> <i class="icon-menu" title="Layout options"></i>
+                                </li>
+                                <!-- /layout -->
+                            </ul>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_COMPTABLE') %}
+                            <ul class="nav nav-sidebar" data-nav-type="accordion">
+                                <li class="nav-item-header">
+                                    <div class="text-uppercase font-size-xs line-height-xs">MAIN</div>
+                                    <i class="icon-menu" title="Main"></i>
+                                </li>
+                                <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="icon-home4"></i><span>Dashboard</span></a></li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-people"></i> <span>Utilisateurs</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/etudiant" class="nav-link"><i class="icon-users"></i> <span>Etudiants</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-cash3"></i> <span>Paiements</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/payement" class="nav-link"><i class="icon-cash2"></i> <span>Paiement d'étudiants</span></a></li>
+                                        <li class="nav-item"><a href="/methdepay" class="nav-link"><i class="icon-coin-dollar"></i> <span>Méthodes de paiement</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item"><a href="/groupe" class="nav-link"><i class="icon-users4"></i> <span>Groupes</span></a></li>
+                                <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link"><i class="icon-switch2"></i> <span>Logout</span></a></li>
+                                <!-- /main -->
+                            </ul>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_ETUDIANT') %}
+                            <ul class="nav nav-sidebar" data-nav-type="accordion">
+                                <li class="nav-item-header">
+                                    <div class="text-uppercase font-size-xs line-height-xs">MAIN</div>
+                                    <i class="icon-menu" title="Main"></i>
+                                </li>
+                                <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="icon-home4"></i><span>Dashboard</span></a></li>
+                                <li class="nav-item nav-item-submenu">
+                                    <a href="#" class="nav-link"><i class="icon-certificate"></i> <span>Resultats</span></a>
+                                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                                        <li class="nav-item"><a href="/session" class="nav-link"><i class="icon-file-check"></i><span>Notes</span></a></li>
+                                        <li class="nav-item"><a href="/etudiant/bulletins" class="nav-link"><i class="icon-file-text2"></i><span>Bulletins</span></a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item"><a href="/admin/lessons" class="nav-link"><i class="icon-graduation2"></i><span>Leçons</span></a></li>
+                                <li class="nav-item"><a href="/admin/planning" class="nav-link"><i class="icon-hour-glass2"></i><span>Planning</span></a></li>
+                                <li class="nav-item"><a href="/exams/examplan" class="nav-link"><i class="icon-hour-glass3"></i><span>Planning d'exams</span></a></li>
+                                <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link"><i class="icon-switch2"></i> <span>Logout</span></a></li>
+                                <!-- /main -->
+                            </ul>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_PROFESSEUR') %}
+                            <ul class="nav nav-sidebar" data-nav-type="accordion">
+                                <li class="nav-item-header">
+                                    <div class="text-uppercase font-size-xs line-height-xs">MAIN</div>
+                                    <i class="icon-menu" title="Main"></i>
+                                </li>
+                                <li class="nav-item"><a href="/admin/dashboard" class="nav-link"><i class="icon-home4"></i><span>Dashboard</span></a></li>
+                                <li class="nav-item"><a href="/admin/session" class="nav-link"><i class="icon-users4"></i><span>Groupes</span></a></li>
+                                <li class="nav-item"><a href="/lessons" class="nav-link"><i class="icon-graduation2"></i><span>Leçons</span></a></li>
+                                <li class="nav-item"><a href="/admin/planning" class="nav-link"><i class="icon-hour-glass2"></i><span>Planning</span></a></li>
+                                <li class="nav-item"><a href="{{ path('app_logout') }}" class="nav-link"><i class="icon-switch2"></i> <span>Logout</span></a></li>
+                                {# <li class="nav-item"><a href="#" class="nav-link"><i class="icon-home4"></i><span>Absence</span></a></li>
+                                <li class="nav-item"><a href="#" class="nav-link"><i class="icon-home4"></i><span>Leçons</span></a></li> #}
+                                <!-- /main -->
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <!-- /main navigation -->
+                </div>
+                <!-- /sidebar content -->
+
+            </div>
+            <!-- /main sidebar -->
+
+
+            <!-- Main content -->
+            <div class="content-wrapper">
+
+                <!-- Page header -->
+                <div class="page-header page-header-light">
+                    <div class="page-header-content header-elements-md-inline">
+                        <div class="page-title d-flex">
+                            <h4><i class="icon-arrow-left52 mr-2"></i> <span class="font-weight-semibold">Home</span> - Dashboard</h4>
+                            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+                        </div>
+
+                        <div class="header-elements d-none">
+                            <div class="d-flex justify-content-center">
+                                <a href="#" class="btn btn-link btn-float text-default"><i class="icon-bars-alt text-primary"></i><span>Statistics</span></a>
+                                <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calculator text-primary"></i> <span>Invoices</span></a>
+                                <a href="#" class="btn btn-link btn-float text-default"><i class="icon-calendar5 text-primary"></i> <span>Schedule</span></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="breadcrumb-line breadcrumb-line-light header-elements-md-inline">
+                        <div class="d-flex">
+                            <div class="breadcrumb">
+                                <a href="index.html" class="breadcrumb-item"><i class="icon-home2 mr-2"></i> Home</a>
+                                <span class="breadcrumb-item active">Dashboard</span>
+                            </div>
+
+                            <a href="#" class="header-elements-toggle text-default d-md-none"><i class="icon-more"></i></a>
+                        </div>
+
+                        <div class="header-elements d-none">
+                            <div class="breadcrumb justify-content-center">
+                                <a href="#" class="breadcrumb-elements-item">
+                                    <i class="icon-comment-discussion mr-2"></i> Support
+                                </a>
+
+                                <div class="breadcrumb-elements-item dropdown p-0">
+                                    <a href="#" class="breadcrumb-elements-item dropdown-toggle" data-toggle="dropdown">
+                                        <i class="icon-gear mr-2"></i> Settings
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item"><i class="icon-user-lock"></i> Account security</a>
+                                        <a href="#" class="dropdown-item"><i class="icon-statistics"></i> Analytics</a>
+                                        <a href="#" class="dropdown-item"><i class="icon-accessibility"></i> Accessibility</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="#" class="dropdown-item"><i class="icon-gear"></i> All settings</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /page header -->
+                <!-- Content area -->
+            
+            <div class="content">
+                {% block body %}{% endblock %}
+            </div>
+
+                <!-- /content area -->
+            </div>
+            <!-- /main content -->
+
+        </div>
+        <!-- /page content -->
+    </body>
+
+</html>

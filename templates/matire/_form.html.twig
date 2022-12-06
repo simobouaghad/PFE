@@ -1,0 +1,157 @@
+{{ form_start(form, {'attr': {'class':'matiere-content'}}) }}
+    <div style="box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2;; margin: 0 auto; padding: 20px; width: 96%;">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Nom :</label>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            {{ form_widget(form.name, {'attr': {'class':'form-control', 'placeholder': 'Entre un nom pour la matière'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Image :</label>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            {{ form_widget(form.image, {'attr': {'class':'form-control', 'placeholder': 'image'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Centre :</label>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            {{ form_widget(form.centre, {'attr': {'class':'form-control', 'placeholder': 'choisir le centre'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Categorie :</label>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            {{ form_widget(form.category, {'attr': {'class':'form-control', 'placeholder': 'choisir la categorie'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Sous Categorie :</label>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            {{ form_widget(form.sousCategory, {'attr': {'class':'form-control', 'placeholder': 'choisir la sous Categorie'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Coefficient :</label>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            {{ form_widget(form.coefficient, {'attr': {'class':'form-control', 'placeholder': 'Donner la coefficient'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Description :</label>
+                    <div class="form-group row">
+                        <div class="col-lg-12">
+                            {{ form_widget(form.description, {'attr': {'class':'form-control', 'placeholder': 'Donner une description'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }} <i class="icon-paperplane ml-2"></i></button>
+        </div>
+    </div>
+{{ form_end(form) }}
+
+
+    {% if is_granted('ROLE_DIRECTEUR') %}
+        <option id="centreID" style="display: none;">{{app.user.centre.id}}</option>
+        <option id="centreName" style="display: none;">{{app.user.centre.name}}</option>
+        <script>
+            $('#matire_centre option')
+                .remove();
+            $('#matire_centre')
+                .append('<option value=""></option>')
+            $('#matire_centre')
+                .append('<option value="'+$('#centreID').val()+'">'+$('#centreName').val()+'</option>')
+        </script>
+    {% endif %}
+
+    {% block javascripts %}
+        <script>
+            $('.matiere-content').on('change', '#matire_centre', function(e) {
+
+                $.ajax({
+                    accepts: 'application/json',
+                    url: '{{ path('matire_centre') }}',
+                    type: 'POST',
+                    data: {
+                        "centre": $("#matire_centre").val(),
+                    },
+                    success: function (request) {
+
+                        console.log(request)
+                        $('#matire_category option')
+                            .remove();
+                        $('#matire_category')
+                            .append('<option value=""></option>')
+                        for (i = 0; i < request.length; i++) {
+                            $('#matire_category')
+                                .append('<option value="'+request[i].id+'">'+request[i].name+'</option>')
+                        }
+                    },
+                });
+            });
+
+            $('.matiere-content').on('change', '#matire_category', function(e) {
+                $.ajax({
+                    accepts: 'application/json',
+                    url: '{{ path('matire_category') }}',
+                    type: 'POST',
+                    data: {
+                        "category": $("#matire_category").val(),
+                    },
+                    success: function (request) {
+
+                        console.log(request)
+                        $('#matire_sousCategory option')
+                            .remove();
+                        $('#matire_sousCategory')
+                            .append('<option value=""></option>')
+                        for (i = 0; i < request.length; i++) {
+                            $('#matire_sousCategory')
+                                .append('<option value="'+request[i].id+'">'+request[i].name+'</option>')
+                        }
+                    },
+                });
+            });
+        </script>
+    {% endblock %}

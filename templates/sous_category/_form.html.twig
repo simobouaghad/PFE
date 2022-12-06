@@ -1,0 +1,95 @@
+{{ form_start(form, {'attr': {'class':'souscategory-content'}}) }}
+<div style="box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2;; margin: 0 auto; padding: 20px; width: 96%;">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Nom :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.name, {'attr': {'class':'form-control', 'placeholder': 'Entrer un nom'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Description :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.description, {'attr': {'class':'form-control', 'placeholder': 'Donner une description'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Centre :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.centre, {'attr': {'class':'form-control', 'placeholder': 'Choisir un centre'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Categorie :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.category, {'attr': {'class':'form-control', 'placeholder': 'Choisir la categorie'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-right">
+		<button type="submit" class="btn btn-primary">{{ button_label|default('Save') }} <i class="icon-paperplane ml-2"></i></button>
+	</div>
+</div>
+{{ form_end(form) }}
+
+    {% if is_granted('ROLE_DIRECTEUR') %}
+        <option id="centreID" style="display: none;">{{app.user.centre.id}}</option>
+        <option id="centreName" style="display: none;">{{app.user.centre.name}}</option>
+        <script>
+            $('#sous_category_centre option')
+                .remove();
+            $('#sous_category_centre')
+                .append('<option value=""></option>')
+            $('#sous_category_centre')
+                .append('<option value="'+$('#centreID').val()+'">'+$('#centreName').val()+'</option>')
+        </script>
+    {% endif %}
+
+{% block javascripts %}
+    <script>
+        $('.souscategory-content').on('change', '#sous_category_centre', function(e) {
+
+                $.ajax({
+                    accepts: 'application/json',
+                    url: '{{ path('etudiant_category') }}',
+                    type: 'POST',
+                    data: {
+                        "centre": $("#sous_category_centre").val(),
+                    },
+                    success: function (request) {
+
+                        console.log(request)
+                        $('#sous_category_category option')
+                            .remove();
+                        $('#sous_category_category')
+                            .append('<option value=""></option>')
+                        for (i = 0; i < request.length; i++) {
+                            $('#sous_category_category')
+                                .append('<option value="'+request[i].id+'">'+request[i].name+'</option>')
+                        }
+                    },
+                });
+            });
+    </script>
+{% endblock %}

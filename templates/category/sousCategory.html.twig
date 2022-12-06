@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SousCategories{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Sous Categories</h1>
+        <a href="{{ path('app_sous_category_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    {# admin #}
+    {% if is_granted('ROLE_ADMIN') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Centre</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sous_category in sous_categories %}
+            {% if sous_category.category.id == category.id %}
+                <tr style="text-align: center;">
+                    <td>{{ sous_category.id }}</td>
+                    <td>{{ sous_category.name }}</td>
+                    <td>{{ sous_category.category }}</td>
+                    <td>{{ sous_category.centre }}</td>
+                    <td>{{ sous_category.description }}</td>
+                    <td class="action" style="width: 80%;">
+                        <a href="{{ path('app_sous_category_groupe', {'id': sous_category.id}) }}"><i class="icon-users4"></i></a>
+                        <a href="{{ path('app_sous_category_edit', {'id': sous_category.id}) }}"><i class="icon-pencil7"></i></a>
+                        {{ include('sous_category/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# directeur #}
+    {% elseif  is_granted('ROLE_DIRECTEUR') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Id</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Centre</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for sous_category in sous_categories %}
+            {% if sous_category.category.id == category.id %}
+                {% if sous_category.centre == app.user.centre %}
+                    <tr style="text-align: center;">
+                        <td>{{ sous_category.id }}</td>
+                        <td>{{ sous_category.name }}</td>
+                        <td>{{ sous_category.category }}</td>
+                        <td>{{ sous_category.centre }}</td>
+                        <td>{{ sous_category.description }}</td>
+                        <td class="action" style="width: 80%;">
+                            <a href="{{ path('app_sous_category_groupe', {'id': sous_category.id}) }}"><i class="icon-users4"></i></a>
+                            <a href="{{ path('app_sous_category_edit', {'id': sous_category.id}) }}"><i class="icon-pencil7"></i></a>
+                            {{ include('sous_category/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

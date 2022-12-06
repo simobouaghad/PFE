@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Session index{% endblock %}
+
+{% block body %}
+
+    <div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+        <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+            <h1 style="color: #3378F1; font-weight: 600;">les bulletins selon les sessions</h1>
+        </div>
+
+        <div style="border-radius: 4px; display: flex; justify-content: space-between; padding: 10px; margin-bottom: 5px; width: 100%;border: 1px solid #dddfe2;">
+                <form class="session-content" style='width: 85%;'>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Session :</label>
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <select id="etudiant_session" class="form-control" required="required">
+                                            <option value=''></option>
+                                            {% for session in sessions %}
+                                                <option value="{{session.id}}"> {{session.name}} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Semestre :</label>
+                                <div class="form-group row">
+                                    <div class="col-lg-12">
+                                        <select id="etudiant_semestre" class="form-control" required="required">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <div id="notes_page" style='display: flex; align-items: center;'>
+                    <a href="#" class="btn btn-primary" style="margin-top: 6px;">search<i class="icon-paperplane ml-2"></i></a>
+                </div>
+
+                <script src="/global_assets/js/main/jquery.min.js"></script>
+                <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+                <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+                <script>
+                    $('.session-content').on('change', '#etudiant_session', function(e) {
+                        $.ajax({
+                            accepts: 'application/json',
+                            url: '{{ path('etudiant_semestre') }}',
+                            type: 'POST',
+                            data: {
+                                "session": $("#etudiant_session").val(),
+                            },
+
+                            success: function (request) {
+                                console.log(request)
+                                $('#etudiant_semestre option')
+                                    .remove();
+                                $('#etudiant_semestre')
+                                    .append('<option value=""></option>')
+                                for (i = 0; i < request.length; i++) {
+                                    $('#etudiant_semestre')
+                                        .append('<option value="'+request[i].id+'">'+request[i].name+'</option>')
+                                    }
+                                },
+                            });
+                    });
+
+                    $('.session-content').on('change', '#etudiant_semestre', function(e) {
+                        $('#notes_page a')
+                            .remove();
+                        $('#notes_page')
+                            .append('<a href="#" class="btn btn-primary" style="margin-top: 6px;">search<i class="icon-paperplane ml-2"></i</a>')
+                    });
+                </script>
+            </div>
+
+    </div>
+
+{% endblock %}

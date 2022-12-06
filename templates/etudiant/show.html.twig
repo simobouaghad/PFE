@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etudiant{% endblock %}
+
+{% block body %}
+
+    <div class="edit-head" style="width: 96%; margin: 0 auto; display: flex; align-items: center;">
+        <h1 style="color: #3378F1; font: 600; width: 96%; font-weight: 600;">Page d'étudiant</h1>
+        <div style="display: flex; align-items: center; justify-content: space-between; width: 15%;">
+            {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE') or is_granted('ROLE_DIRECTEUR') %}
+                <a href="path('app_etudiant_edit', {'id': etudiant.id}) }}"><i class="icon-pencil7" style="font-size: 25px; color: #4caf50;"></i></a>
+                {{ include('etudiant/_delete_form.html.twig') }}
+            {% endif %}
+        </div>
+
+    </div>
+    
+    <table class="table" style="margin: 0 auto; width: 80%; text-align: center;">
+        <div style="width: 100%; display: flex; justify-content: center;">
+            <img style="width: 150px; border-radius: 50%; margin-bottom: 10px;" src={{ asset('uploads/images/' ~ etudiant.image) }}>
+        </div>
+
+        <tbody style="border: 1px solid #dddfe2;">
+            <tr>
+                <th>Nom</th>
+                <td>{{ etudiant.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prènom</th>
+                <td>{{ etudiant.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Sexe</th>
+                <td>{{ etudiant.sexe }}</td>
+            </tr>
+            <tr>
+                <th>Nom du père</th>
+                <td>{{ etudiant.nompere }}</td>
+            </tr>
+            <tr>
+                <th>Prènom du père</th>
+                <td>{{ etudiant.prenompere }}</td>
+            </tr>
+            <tr>
+                <th>CNI</th>
+                <td>{{ etudiant.CNIpere }}</td>
+            </tr>
+            <tr>
+                <th>Numéro de téléphone</th>
+                <td>{{ etudiant.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ etudiant.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Session</th>
+                <td>{{ etudiant.annee }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ etudiant.category }}</td>
+            </tr>
+            <tr>
+                <th>Sous categorie</th>
+                <td>{{ etudiant.souscategory }}</td>
+            </tr>
+            <tr>
+                <th>Groupe</th>
+                <td>{{ etudiant.groupe }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+{% endblock %}

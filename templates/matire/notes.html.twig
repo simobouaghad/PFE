@@ -1,0 +1,260 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Matiere index{% endblock %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_PROFESSEUR') %}
+    <div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+
+        <div style="margin: 0 auto; display: flex; justify-content: space-between; padding: 10px; margin-bottom: 5px; width: 100%;border: 1px solid #dddfe2;">
+            <div style="padding: 10px; margin-bottom: 5px;">
+                <div><span style="font-weight: 600;">école : </span>E-learning</div>
+                {% for gestionmatire in gestionmatires %}
+                    {% for groupe in groupes %}
+                        {% if groupe.id == grp and groupe == gestionmatire.groupe and gestionmatire.prof.email == app.user.email and gestionmatire.session == semestre.session %}
+                            <div><span style="font-weight: 600;">Centre : </span>{{gestionmatire.centre}}</div>
+                            <div><span style="font-weight: 600;">Niveau : </span>{{gestionmatire.sousCategory}}</div>
+                            <div><span style="font-weight: 600;">Groupe : </span>{{gestionmatire.groupe.name}}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div style=" margin-bottom: 5px;">
+                <img src="../../../../global_assets/images/admigha.png" style="width: 100px; border-radius: 50%;" />
+            </div>
+
+            <div style="padding: 10px; margin-bottom: 5px;">
+                {% for gestionmatire in gestionmatires %}
+                    {% for groupe in groupes %}
+                        {% if groupe.id == grp and groupe == gestionmatire.groupe and gestionmatire.prof.email == app.user.email and gestionmatire.session == semestre.session %}
+                            <div><span style="font-weight: 600;">Matière : </span>{{gestionmatire.matire}}</div>
+                            <div><span style="font-weight: 600;">Session : </span>{{gestionmatire.session}}</div>
+                            <div><span style="font-weight: 600;">Semestre : </span>{{semestre.nom}}</div>
+                            <div><span style="font-weight: 600;">Professeur : </span>{{app.user.nomuser}}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                    <th>Etudiant</th>
+                    <th>devoir 1</th>
+                    <th>devoir 2</th>
+                    <th>devoir 3</th>
+                    <th>devoir 4</th>
+                    <th>TD/TP</th>
+                    <th>Totale</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for list_note in list_notes %}
+                {% for etudiant in etudiants %}
+                    {% for gestionmatire in gestionmatires %}
+                        {% if gestionmatire.groupe.id == grp and 
+                            etudiant.groupe.id == grp and 
+                            gestionmatire.matire == list_note.matire and 
+                            etudiant.cne == list_note.cne and 
+                            etudiant.groupe == list_note.groupe and 
+                            list_note.semestre == semestre.nom and 
+                            etudiant.annee == semestre.session and
+                            gestionmatire.prof.email == app.user.email and
+                            etudiant.centre == app.user.centre and
+                            etudiant.annee == gestionmatire.session
+                        %}
+                            <tr style="text-align: center;">
+                                <td>{{ etudiant.nom }} {{etudiant.prenom}}</td>
+                                <td>{{ list_note.ds1 }}</td>
+                                <td>{{ list_note.ds2 }}</td>
+                                <td>{{ list_note.ds3 }}</td>
+                                <td>{{ list_note.ds4 }}</td>
+                                <td>{{ list_note.activite }}</td>
+                                <td>{{ list_note.total }}</td>
+                                <td class="action" style="border: none;">
+                                    <a href="{{ path('app_listnote_edit', {'id': list_note.id}) }}" style="margin-top: 4px;"><i class="icon-pencil7"></i></a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="5">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% elseif is_granted('ROLE_DIRECTEUR') %}
+        <div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+            <div style="margin: 0 auto; display: flex; justify-content: space-between; padding: 10px; margin-bottom: 5px; width: 100%;border: 1px solid #dddfe2;">
+                <div style="padding: 10px; margin-bottom: 5px;">
+                    <div><span style="font-weight: 600;">école : </span>E-learning</div>
+                    {% for gestionmatire in gestionmatires %}
+                        {% for groupe in groupes %}
+                            {% if groupe.id == grp and gestionmatire.matire.id == mtr and groupe == gestionmatire.groupe and gestionmatire.session == semestre.session and gestionmatire.centre == app.user.centre %}
+                                <div><span style="font-weight: 600;">Centre : </span>{{gestionmatire.centre}}</div>
+                                <div><span style="font-weight: 600;">Niveau : </span>{{gestionmatire.sousCategory}}</div>
+                                <div><span style="font-weight: 600;">Groupe : </span>{{gestionmatire.groupe.name}}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+
+                <div style=" margin-bottom: 5px;">
+                    <img src="../../../../global_assets/images/admigha.png" style="width: 100px; border-radius: 50%;" />
+                </div>
+
+                <div style="padding: 10px; margin-bottom: 5px;">
+                    {% for gestionmatire in gestionmatires %}
+                        {% for groupe in groupes %}
+                            {% if gestionmatire.matire.id == mtr and groupe.id == grp and groupe == gestionmatire.groupe and gestionmatire.session == semestre.session and gestionmatire.centre == app.user.centre %}
+                                <div><span style="font-weight: 600;">Matière : </span>{{gestionmatire.matire}}</div>
+                                <div><span style="font-weight: 600;">Session : </span>{{gestionmatire.session}}</div>
+                                <div><span style="font-weight: 600;">Semestre : </span>{{semestre.nom}}</div>
+                                <div><span style="font-weight: 600;">Professeur : </span>{{gestionmatire.prof.nom}} {{gestionmatire.prof.prenom}}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                        <th>Etudiant</th>
+                        <th>devoir 1</th>
+                        <th>devoir 2</th>
+                        <th>devoir 3</th>
+                        <th>devoir 4</th>
+                        <th>TD/TP</th>
+                        <th>Totale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for list_note in list_notes %}
+                    {% for etudiant in etudiants %}
+                        {% for gestionmatire in gestionmatires %}
+                            {% if gestionmatire.groupe.id == grp and 
+                                etudiant.groupe.id == grp and 
+                                gestionmatire.matire == list_note.matire and 
+                                etudiant.cne == list_note.cne and 
+                                etudiant.groupe == list_note.groupe and 
+                                list_note.semestre == semestre.nom and 
+                                etudiant.annee == semestre.session and
+                                gestionmatire.centre == app.user.centre and
+                                etudiant.centre == app.user.centre and
+                                etudiant.annee == gestionmatire.session and
+                                gestionmatire.matire.id == mtr
+                            %}
+                                <tr style="text-align: center;">
+                                    <td>{{ etudiant.nom }} {{etudiant.prenom}}</td>
+                                    <td>{{ list_note.ds1 }}</td>
+                                    <td>{{ list_note.ds2 }}</td>
+                                    <td>{{ list_note.ds3 }}</td>
+                                    <td>{{ list_note.ds4 }}</td>
+                                    <td>{{ list_note.activite }}</td>
+                                    <td>{{ list_note.total }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% elseif is_granted('ROLE_ADMIN') %}
+        <div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+            <div style="margin: 0 auto; display: flex; justify-content: space-between; padding: 10px; margin-bottom: 5px; width: 100%;border: 1px solid #dddfe2;">
+                <div style="padding: 10px; margin-bottom: 5px;">
+                    <div><span style="font-weight: 600;">école : </span>E-learning</div>
+                    {% for gestionmatire in gestionmatires %}
+                        {% for groupe in groupes %}
+                            {% if groupe.id == grp and gestionmatire.matire.id == mtr and groupe == gestionmatire.groupe and gestionmatire.session == semestre.session %}
+                                <div><span style="font-weight: 600;">Centre : </span>{{gestionmatire.centre}}</div>
+                                <div><span style="font-weight: 600;">Niveau : </span>{{gestionmatire.sousCategory}}</div>
+                                <div><span style="font-weight: 600;">Groupe : </span>{{gestionmatire.groupe.name}}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+
+                <div style=" margin-bottom: 5px;">
+                    <img src="../../../../global_assets/images/admigha.png" style="width: 100px; border-radius: 50%;" />
+                </div>
+
+                <div style="padding: 10px; margin-bottom: 5px;">
+                    {% for gestionmatire in gestionmatires %}
+                        {% for groupe in groupes %}
+                            {% if gestionmatire.matire.id == mtr and groupe.id == grp and groupe == gestionmatire.groupe and gestionmatire.session == semestre.session %}
+                                <div><span style="font-weight: 600;">Matière : </span>{{gestionmatire.matire}}</div>
+                                <div><span style="font-weight: 600;">Session : </span>{{gestionmatire.session}}</div>
+                                <div><span style="font-weight: 600;">Semestre : </span>{{semestre.nom}}</div>
+                                <div><span style="font-weight: 600;">Professeur : </span>{{gestionmatire.prof.nom}} {{gestionmatire.prof.prenom}}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                        <th>Etudiant</th>
+                        <th>devoir 1</th>
+                        <th>devoir 2</th>
+                        <th>devoir 3</th>
+                        <th>devoir 4</th>
+                        <th>TD/TP</th>
+                        <th>Totale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for list_note in list_notes %}
+                    {% for etudiant in etudiants %}
+                        {% for gestionmatire in gestionmatires %}
+                            {% if gestionmatire.groupe.id == grp and 
+                                etudiant.groupe.id == grp and 
+                                gestionmatire.matire == list_note.matire and 
+                                etudiant.cne == list_note.cne and 
+                                etudiant.groupe == list_note.groupe and 
+                                list_note.semestre == semestre.nom and 
+                                etudiant.annee == semestre.session and
+                                etudiant.annee == gestionmatire.session and
+                                gestionmatire.matire.id == mtr
+                            %}
+                                <tr style="text-align: center;">
+                                    <td>{{ etudiant.nom }} {{etudiant.prenom}}</td>
+                                    <td>{{ list_note.ds1 }}</td>
+                                    <td>{{ list_note.ds2 }}</td>
+                                    <td>{{ list_note.ds3 }}</td>
+                                    <td>{{ list_note.ds4 }}</td>
+                                    <td>{{ list_note.activite }}</td>
+                                    <td>{{ list_note.total }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+{% endblock %}

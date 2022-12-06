@@ -1,0 +1,136 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etudiant index{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">les étudiants du groupe : {{groupe.name}}</h1>
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE') or is_granted('ROLE_DIRECTEUR') %}
+            <a href="{{ path('app_etudiant_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+        {% endif %}
+    </div>
+
+    {# admin & comptable #}
+    {% if  is_granted('ROLE_ADMIN') or is_granted('ROLE_COMPTABLE') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Telephone du pére</th>
+                <th>Adresse</th>
+                <th>Session</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etudiant in etudiants %}
+            {% if etudiant.groupe.id == groupe.id %}
+                <tr style="text-align: center;">
+                    <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ etudiant.image) }}></td>
+                    <td>{{ etudiant.nom }}</td>
+                    <td>{{ etudiant.prenom }}</td>
+                    <td>{{ etudiant.sexe }}</td>
+                    <td>{{ etudiant.telephone }}</td>
+                    <td>{{ etudiant.adresse }}</td>
+                    <td>{{ etudiant.annee }}</td>
+                    <td class="action" style="width: 70%;">
+                        <a href="{{ path('app_etudiant_show', {'id': etudiant.id}) }}" style="margin-top: 14px;"><i class="icon-eye2"></i></a>
+                        <a href="{{ path('app_etudiant_edit', {'id': etudiant.id}) }}" style="margin-top: 14px;"><i class="icon-pencil7"></i></a>
+                        <a href="{{ path('app_etudiant_payment', {'id': etudiant.id}) }}" style="margin-top: 14px;"><i class="icon-cash" style="font-size: 20px; color: red;"></i></a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# directeur #}
+    {% elseif is_granted('ROLE_DIRECTEUR') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Telephone du pére</th>
+                <th>Adresse</th>
+                <th>Session</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etudiant in etudiants %}
+            {% if etudiant.groupe.id == groupe.id %}
+                <tr style="text-align: center;">
+                    <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ etudiant.image) }}></td>
+                    <td>{{ etudiant.nom }}</td>
+                    <td>{{ etudiant.prenom }}</td>
+                    <td>{{ etudiant.sexe }}</td>
+                    <td>{{ etudiant.telephone }}</td>
+                    <td>{{ etudiant.adresse }}</td>
+                    <td>{{ etudiant.annee }}</td>
+                    <td class="action" style="width: 70%;">
+                        <a href="{{ path('app_etudiant_show', {'id': etudiant.id}) }}" style="margin-top: 14px;"><i class="icon-eye2"></i></a>
+                        <a href="{{ path('app_etudiant_edit', {'id': etudiant.id}) }}" style="margin-top: 14px;"><i class="icon-pencil7"></i></a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# professeur #}
+    {% elseif is_granted('ROLE_PROFESSEUR') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Telephone du pére</th>
+                <th>Session</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etudiant in etudiants %}
+            {% if etudiant.groupe.id == groupe.id %}
+                <tr style="text-align: center;">
+                    <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ etudiant.image) }}></td>
+                    <td>{{ etudiant.nom }}</td>
+                    <td>{{ etudiant.prenom }}</td>
+                    <td>{{ etudiant.sexe }}</td>
+                    <td>{{ etudiant.telephone }}</td>
+                    <td>{{ etudiant.annee }}</td>
+                    <td class="action">
+                        <a href="{{ path('app_etudiant_show', {'id': etudiant.id}) }}" style="margin-top: 14px;"><i class="icon-eye2"></i></a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

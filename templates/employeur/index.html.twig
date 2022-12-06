@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Employeur index{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Employées</h1>
+        <a href="{{ path('app_employeur_new') }}"><i class="icon-user-plus" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    {# admin #}
+    {% if is_granted('ROLE_ADMIN') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Type</th>
+                <th>Telephone</th>
+                <th>CIN</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employeur in employeurs %}
+            <tr style="text-align: center;">
+                <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ employeur.image) }}></td>
+                <td>{{ employeur.nom }}</td>
+                <td>{{ employeur.prenom }}</td>
+                <td>{{ employeur.type }}</td>
+                <td>{{ employeur.telephone }}</td>
+                <td>{{ employeur.CIN }}</td>
+                <td>{{ employeur.email }}</td>
+                <td class="action" style="width: 70%; justify-content: space-between !important;">
+                    <a href="{{ path('app_employeur_show', {'id': employeur.id}) }}" style="margin-top: 14px;"><i class="icon-eye2"></i></a>
+                    <a href="{{ path('app_employeur_edit', {'id': employeur.id}) }}" style="margin-top: 14px;"><i class="icon-pencil7"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# directeur #}
+    {% elseif  is_granted('ROLE_DIRECTEUR') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Type</th>
+                <th>Telephone</th>
+                <th>CIN</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for employeur in employeurs %}
+            {% if employeur.centre == app.user.centre %}
+                <tr style="text-align: center;">
+                    <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ employeur.image) }}></td>
+                    <td>{{ employeur.nom }}</td>
+                    <td>{{ employeur.prenom }}</td>
+                    <td>{{ employeur.type }}</td>
+                    <td>{{ employeur.telephone }}</td>
+                    <td>{{ employeur.CIN }}</td>
+                    <td>{{ employeur.email }}</td>
+                    <td class="action" style="width: 70%; justify-content: space-between !important;">
+                        <a href="{{ path('app_employeur_show', {'id': employeur.id}) }}" style="margin-top: 14px;"><i class="icon-eye2"></i></a>
+                        <a href="{{ path('app_employeur_edit', {'id': employeur.id}) }}" style="margin-top: 14px;"><i class="icon-pencil7"></i></a>
+                    </td>
+                </tr>
+            {% endif %} 
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>
+
+{% endblock %}

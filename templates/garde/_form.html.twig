@@ -1,0 +1,194 @@
+{{ form_start(form, {'attr': {'class':'garde-content'}}) }}
+<div style="box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2;; margin: 0 auto; padding: 20px; width: 96%;">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Entrer le nom :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.nom, {'attr': {'class':'form-control', 'placeholder': 'Entrer le nom'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Entrer le prènom :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.prenom, {'attr': {'class':'form-control', 'placeholder': 'Entre le prénom'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Choisir le sexe :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.sexe, {'attr': {'class':'form-control', 'placeholder': 'Choisir le sexe'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>CIN :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.cin, {'attr': {'class':'form-control', 'placeholder': 'Entre CIN de Carte nationale'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Numéro de téléphone :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.telephone, {'attr': {'class':'form-control', 'placeholder': 'Entre numéro de téléphone'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Adresse Email :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.email, {'attr': {'class':'form-control', 'placeholder': 'Entrer l\'adresse email'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Adresse :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.adresse, {'attr': {'class':'form-control', 'placeholder': 'Entrer l\'adresse'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Image :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.image, {'attr': {'class':'form-control', 'placeholder': 'image'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Ville :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.ville, {'attr': {'class':'form-control', 'placeholder': 'choisir la ville'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Centre :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.centre, {'attr': {'class':'form-control', 'placeholder': 'choisir le Centre'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Salaire :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.salary, {'attr': {'class':'form-control', 'placeholder': 'donner la valeur de salaire'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Password :</label>
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        {{ form_widget(form.password, {'attr': {'class':'form-control', 'placeholder': 'donner un mot de passe'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-right">
+		<button type="submit" class="btn btn-primary">{{ button_label|default('Save') }} <i class="icon-paperplane ml-2"></i></button>
+	</div>
+
+</div>
+{{ form_end(form) }}
+
+    {% if is_granted('ROLE_DIRECTEUR') %}
+        <option id="villeID" style="display: none;">{{app.user.ville.id}}</option>
+        <option id="villeName" style="display: none;">{{app.user.ville.name}}</option>
+        <script>
+            $('#garde_ville option')
+                .remove();
+            $('#garde_ville')
+                .append('<option value=""></option>')
+            $('#garde_ville')
+                .append('<option value="'+$('#villeID').val()+'">'+$('#villeName').val()+'</option>')
+        </script>
+    {% endif %}
+
+    {% block javascripts %}
+        <script>
+            $('.garde-content').on('change', '#garde_ville', function(e) {
+
+                $.ajax({
+                    accepts: 'application/json',
+                    url: '{{ path('garde_centre') }}',
+                    type: 'POST',
+                    data: {
+                        "ville": $("#garde_ville").val(),
+                    },
+                    success: function (request) {
+
+                        console.log(request)
+                        $('#garde_centre option')
+                            .remove();
+                        $('#garde_centre')
+                            .append('<option value=""></option>')
+                        for (i = 0; i < request.length; i++) {
+                            $('#garde_centre')
+                                .append('<option value="'+request[i].id+'">'+request[i].name+'</option>')
+                        }
+                    },
+                });
+            });
+        </script>
+    {% endblock %}

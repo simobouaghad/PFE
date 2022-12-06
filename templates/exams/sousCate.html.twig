@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}sous-categories{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Les sous catégories</h1>
+    </div>
+
+    {% if is_granted('ROLE_DIRECTEUR') %}
+        <div class="content">
+            <div class="row">
+                {% for sousCategorie in sousCategories %}
+                    {% if sousCategorie.category == category and sousCategorie.centre == app.user.centre %}
+                        <a href="{{ path('get_app_examplan', {'id': sousCategorie.id}) }}" class="col-xl-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-img-actions">
+                                    <img class="card-img-top img-fluid" src="/uploads/images/{{category.image}}" alt="">
+                                </div>
+                                <div class="card-body text-center">
+                                    <h6 class="font-weight-semibold mb-0">{{sousCategorie.name}}</h6>
+                                    <span class="d-block text-muted">{{sousCategorie.category}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="content">
+            <div class="row">
+                {% for sousCategorie in sousCategories %}
+                    {% if sousCategorie.category == category %}
+                        <a href="{{ path('get_app_examplan', {'id': sousCategorie.id}) }}" class="col-xl-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-img-actions">
+                                    <img class="card-img-top img-fluid" src="/uploads/images/{{category.image}}" alt="">
+                                </div>
+                                <div class="card-body text-center">
+                                    <h6 class="font-weight-semibold mb-0">{{sousCategorie.name}}</h6>
+                                    <span class="d-block text-muted">{{sousCategorie.category}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+
+
+{% endblock %}

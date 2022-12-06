@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Listnote{% endblock %}
+
+{% block body %}
+    <h1>Create new Listnote</h1>
+
+    {{ include('listnote/_form.html.twig') }}
+
+    <a href="{{ path('app_listnote_index') }}">back to list</a>
+{% endblock %}

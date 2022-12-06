@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payement index{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Paiements</h1>
+        <a href="{{ path('app_payement_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    {# admin #}
+    {% if is_granted('ROLE_ADMIN') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Groupe</th>
+                <th>Sous Catégorie</th>
+                <th>Centre</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for payement in payements %}
+            <tr style="text-align: center;">
+                <td>{{ payement.groupe }}</td>
+                <td>{{ payement.souscategory }}</td>
+                <td>{{ payement.centre }}</td>
+                <td>{{ payement.prix }} DH</td>
+                <td class="action" style="width: 60%;">
+                    <a href="{{ path('app_payement_etudiant', {'id': payement.id}) }}"><i class="icon-users"></i></a>
+                    <a href="{{ path('app_payement_edit', {'id': payement.id}) }}"><i class="icon-pencil7"></i></a>
+                </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# directeur #}
+    {% elseif is_granted('ROLE_COMPTABLE') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Groupe</th>
+                <th>Sous Catégorie</th>
+                <th>Centre</th>
+                <th>Prix</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for payement in payements %}
+            {% if payement.centre == app.user.centre %}
+                <tr style="text-align: center;">
+                    <td>{{ payement.groupe }}</td>
+                    <td>{{ payement.souscategory }}</td>
+                    <td>{{ payement.centre }}</td>
+                    <td>{{ payement.prix }} DH</td>
+                    <td class="action" style="width: 60%;">
+                        <a href="{{ path('app_payement_etudiant', {'id': payement.id}) }}"><i class="icon-users"></i></a>
+                        <a href="{{ path('app_payement_edit', {'id': payement.id}) }}"><i class="icon-pencil7"></i></a>
+                    </td>
+
+                </tr>
+            {% endif %}
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+</div>
+
+{% endblock %}

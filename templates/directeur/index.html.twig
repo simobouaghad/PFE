@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Directeurs{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Directeurs</h1>
+        <a href="{{ path('app_directeur_new') }}"><i class="icon-user-plus" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Centre</th>
+                <th>CIN</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for directeur in directeurs %}
+            <tr style="text-align: center;">
+                <td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ directeur.image) }}></td>
+                <td>{{ directeur.nom }}</td>
+                <td>{{ directeur.prenom }}</td>
+                <td>{{ directeur.centre }}</td>
+                <td>{{ directeur.CIN }}</td>
+                <td>{{ directeur.telephone }}</td>
+                <td>{{ directeur.email }}</td>
+                <td class="action" style="width: 60%; justify-content: space-between !important;">
+                    <a href="{{ path('app_directeur_show', {'id': directeur.id}) }}" style="margin-top: 20px;"><i class="icon-eye2"></i></a>
+                    <a href="{{ path('app_directeur_edit', {'id': directeur.id}) }}" style="margin-top: 20px;"><i class="icon-pencil7"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    </div>
+{% endblock %}

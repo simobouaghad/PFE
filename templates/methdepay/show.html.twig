@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Methdepay{% endblock %}
+
+{% block body %}
+    <h1>Methdepay</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ methdepay.id }}</td>
+            </tr>
+            <tr>
+                <th>Methode</th>
+                <td>{{ methdepay.methode }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_methdepay_index') }}">back to list</a>
+
+    <a href="{{ path('app_methdepay_edit', {'id': methdepay.id}) }}">edit</a>
+
+    {{ include('methdepay/_delete_form.html.twig') }}
+{% endblock %}

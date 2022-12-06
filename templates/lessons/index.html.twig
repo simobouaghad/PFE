@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lessons index{% endblock %}
+
+{% block body %}
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">les matières</h1>
+        <a href="{{ path('app_lessons_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+    {% if is_granted('ROLE_DIRECTEUR') %}
+        <div class="content">
+            <div class="row">
+                {% for matire in matires %}
+                    {% if matire.centre == app.user.centre %}
+                        <a href="{{ path('app_lessons_cours', {'id': matire.matire.id}) }}" class="col-xl-3 col-sm-6">
+                            <div class="card">
+                                <div class="card-img-actions">
+                                    <img class="card-img-top img-fluid" src="/uploads/images/{{matire.matire.image}}" alt="">
+                                </div>
+                                <div class="card-body text-center">
+                                    <h6 class="font-weight-semibold mb-0">{{matire.souscategory}}</h6>
+                                    <span class="d-block text-muted">{{matire.matire}}</span>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    {% elseif is_granted('ROLE_PROFESSEUR') %}
+        <div class="content">
+            <div class="row">
+                {% for matire in matires %}
+                    {% for professeur in professeurs %}
+                        {% if professeur.email == app.user.email and matire.prof.id == professeur.id %}
+                            <a href="{{ path('app_lessons_cours', {'id': matire.matire.id}) }}" class="col-xl-3 col-sm-6">
+                                <div class="card">
+                                    <div class="card-img-actions">
+                                        <img class="card-img-top img-fluid" src="/uploads/images/{{matire.matire.image}}" alt="">
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h6 class="font-weight-semibold mb-0">{{matire.souscategory}}</h6>
+                                        <span class="d-block text-muted">{{matire.matire}}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endif %}    
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+
+    {% elseif is_granted('ROLE_ADMIN') %}
+        <div class="content">
+            <div class="row">
+                {% for matire in matires %}
+                    <a href="{{ path('app_lessons_cours', {'id': matire.matire.id}) }}" class="col-xl-3 col-sm-6">
+                        <div class="card">
+                            <div class="card-img-actions">
+                                <img class="card-img-top img-fluid" src="/uploads/images/{{matire.matire.image}}" alt="">
+                            </div>
+                            <div class="card-body text-center">
+                                <h6 class="font-weight-semibold mb-0">{{matire.souscategory}}</h6>
+                                <span class="d-block text-muted">{{matire.matire}}</span>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

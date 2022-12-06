@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Listnote{% endblock %}
+
+{% block body %}
+
+    <div class="edit-head" style="width: 96%; margin: 0 auto; display: flex; align-items: center; margin-bottom: 20px;">
+        {% for etudiant in etudiants %}
+            {% if etudiant.cne == listnote.cne and listnote.groupe == etudiant.groupe %}
+                <h1 style="color: #3378F1; font: 600; width: 96%; font-weight: 600;">{{etudiant.nom}} {{etudiant.prenom}}</h1>
+            {% endif %}
+        {% endfor %}
+        
+    </div>
+
+    {{ include('listnote/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Semestre index{% endblock %}
+
+{% block body %}
+
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">Semestres</h1>
+        <a href="{{ path('app_semestre_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+    </div>
+
+{% if is_granted('ROLE_ADMIN') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Id</th>
+                <th>Semestre</th>
+                <th>Session</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for semestre in semestres %}
+            <tr style="text-align: center;">
+                <td>{{ semestre.id }}</td>
+                <td>{{ semestre.nom }}</td>
+                <td>{{ semestre.session }}</td>
+                <td class="action" style="display: flex; justify-content: space-around;">
+                    <a href="{{ path('app_semestre_edit', {'id': semestre.id}) }}" style="margin-top: 4px;"><i class="icon-pencil7"></i></a>
+                    <a style="margin-top: 4px;">{{ include('semestre/_delete_form.html.twig') }}</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% elseif is_granted('ROLE_DIRECTEUR') %}
+    <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr style="color: #3378F1; font-size: 14px; text-align: center;">
+                <th>Id</th>
+                <th>Semestre</th>
+                <th>Session</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for semestre in semestres %}
+            <tr style="text-align: center;">
+                <td>{{ semestre.id }}</td>
+                <td>{{ semestre.nom }}</td>
+                <td>{{ semestre.session }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+{% endblock %}

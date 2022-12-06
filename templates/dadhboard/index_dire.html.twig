@@ -1,0 +1,169 @@
+	{% extends 'base.html.twig' %}
+
+	{% block title %}Dashboard{% endblock %}
+
+	{% block body  %}
+	<style>
+		.example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+		.example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+	</style>
+			{% if is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_COMPTABLE') %}
+				<div class="card" style="padding: 10px; box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 5px;">
+					<div class="mb-3">
+						<h6 class="mb-0 font-weight-semibold" style="color: #3378F1;">
+							Statistiques
+						</h6>
+						<span class="text-muted d-block">centre {{app.user.centre}}</span>
+					</div>
+
+					<div class="row">
+
+						<div class="col-sm-6 col-xl-3">
+							<div class="card card-body bg-blue-400 has-bg-image">
+								<div class="media">
+									<div class="media-body">
+										<h3 class="mb-0">{{etudiants|length}}</h3>
+										<span class="text-uppercase font-size-xs">total etudiants</span>
+									</div>
+
+									<div class="ml-3 align-self-center">
+										<i class="icon-users icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-xl-3">
+							<div class="card card-body bg-indigo-400 has-bg-image">
+								<div class="media">
+									<div class="media-body">
+										<h3 class="mb-0">{{professeur|length}}</h3>
+										<span class="text-uppercase font-size-xs">total professeurs</span>
+									</div>
+
+									<div class="ml-3 align-self-center">
+										<i class="icon-users2 icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-xl-3">
+							<div class="card card-body bg-success-400 has-bg-image">
+								<div class="media">
+									<div class="media-body">
+										<h3 class="mb-0">{{groupe|length}}</h3>
+										<span class="text-uppercase font-size-xs">total groupes</span>
+									</div>
+
+									<div class="ml-3 align-self-center">
+										<i class="icon-users4 icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-6 col-xl-3">
+							<div class="card card-body bg-danger-400 has-bg-image">
+								<div class="media">
+									<div class="media-body">
+										<h3 class="mb-0">{{employeur|length}}</h3>
+										<span class="text-uppercase font-size-xs">total employeurs</span>
+									</div>
+
+									<div class="ml-3 align-self-center">
+										<i class="icon-vcard icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-6 col-xl-3">
+							<div class="card card-body bg-blue-400 has-bg-image">
+								<div class="media">
+									<div class="media-body">
+										<h3 class="mb-0">{{matiers|length}}</h3>
+										<span class="text-uppercase font-size-xs">total matières</span>
+									</div>
+
+									<div class="ml-3 align-self-center">
+										<i class="icon-book icon-3x opacity-75"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				{% endif %}
+
+				{% if is_granted('ROLE_COMPTABLE') %}
+				<div class="card" style="padding: 10px; box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 5px;">
+					<div class="mb-3">
+						<h6 class="mb-0 font-weight-semibold" style="color: #3378F1;">
+							Les étudiants qui doivent payer 
+						</h6>
+						<span class="text-muted d-block">cette semaine</span>
+					</div>
+
+					<table id="example" class="display" style="width:100%">
+						<thead>
+							<tr style="color: black; font-size: 14px; text-align: center;">
+								<th>Image</th>
+								<th>Nom</th>
+								<th>Prenom</th>
+								<th>Ville</th>
+								<th>Centre</th>
+								<th>categorie</th>
+								<th>sous categorie</th>
+								<th>Session</th>
+								<th>actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for etudiant in etudiants %}
+								{% for listpayment in listpayments %}
+									{% if app.user.centre == etudiant.centre and etudiant.cne == listpayment.cne and listpayment.status == 'non payée' and (listpayment.to|date("Y-m-d")) < ('now'|date_modify("+1 week")|date("Y-m-d")) %}
+										<tr style="text-align: center;">
+											<td><img style="width: 50px; border-radius: 50%;" src={{ asset('uploads/images/' ~ etudiant.image) }}></td>
+											<td>{{ etudiant.nom }}</td>
+											<td>{{ etudiant.prenom }}</td>
+											<td>{{ etudiant.ville }}</td>
+											<td>{{ etudiant.centre }}</td>
+											<td>{{ etudiant.category }}</td>
+											<td>{{ etudiant.souscategory }}</td>
+											<td>{{ etudiant.annee }}</td>
+											<td class="action" style="width: 80%;">
+												<a href="{{ path('app_etudiant_show', {'id': etudiant.id}) }}" style="margin-top: 20px;"><i class="icon-eye2"></i></a>
+												<a href="{{ path('app_etudiant_edit', {'id': etudiant.id}) }}" style="margin-top: 20px;"><i class="icon-pencil7"></i></a>
+												<a href="{{ path('app_etudiant_payment', {'id': etudiant.id}) }}" style="margin-top: 20px;"><i class="icon-cash" style="font-size: 20px; color: red;"></i></a>
+											</td>
+										</tr>
+									{% endif %}
+								{% endfor %}
+							{% else %}
+								<tr>
+									<td colspan="12">no records found</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+				{% endif %}
+
+				{% if is_granted('ROLE_ETUDIANT') or is_granted('ROLE_PROFESSEUR') %}
+				<div style="margin: 0 auto; margin-top: 30px; width: 80%; border: 1px solid #dddfe2; border-radius: 5px; box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); padding: 25px; display: flex; justify-content: space-between; align-items: center;">
+					<img src="../../../../uploads/images/{{app.user.image}}" width="100" height="100" class="rounded-circle" style="margin: 0 auto;" alt=""/>
+					<div style="width: 80%;">
+						<h1 style="font-size: 45px; color: #455a64; font-family: "Poppins",sans-serif; font-weight: 400;">{{app.user.nomuser}}</h1>
+						{% if is_granted('ROLE_PROFESSEUR') %}
+							<h4 class="nav-item" style="color: #455a64; line-height: 0.2; margin-left: 10px;"><i class="icon-user-tie"></i> <span style="margin-left: 8px;">professeur</span></h4>
+						{% elseif is_granted('ROLE_ETUDIANT') %}
+							<h4 class="nav-item" style="color: #455a64; line-height: 0.2; margin-left: 10px;"><i class="icon-users"></i> <span style="margin-left: 8px;">étudiant</span></h4>
+						{% endif %}
+					</div>
+				</div>
+				{% endif %}
+
+{% endblock %}

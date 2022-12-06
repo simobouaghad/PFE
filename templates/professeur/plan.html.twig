@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}notes{% endblock %}
+
+{% block body %}
+
+    <div class="content">
+        <div class="row">
+            {% for professeur in professeurs %}
+                {% if professeur.email == app.user.email %}
+                    <a href="../../../../uploads/pdf/{{ professeur.planning }}" class="col-xl-3 col-sm-6" target="_blank">
+                        <div class="card">
+                            <div class="card-img-actions">
+                                <img class="card-img-top img-fluid" src="../../../../global_assets/images/placeholders/user.png" alt="">
+                            </div>
+                            <div class="card-body text-center">
+                                <h6 class="font-weight-semibold mb-0">planning</h6>
+                                <span class="d-block text-muted"> {{professeur.nom}} {{professeur.prenom}}</span>
+                            </div>
+                        </div>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

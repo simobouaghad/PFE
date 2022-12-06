@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}lessons{% endblock %}
+
+{% block body %}
+
+<div class="index" style='box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%); border-radius: 10px; border: 1px solid #dddfe2; padding: 15px;'>
+    <div class="head-index" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding: 10px">
+        <h1 style="color: #3378F1; font-weight: 600;">les coures de {{matire.name}} </h1>
+        {% if is_granted('ROLE_PROFESSEUR') or is_granted('ROLE_DIRECTEUR') %}
+            <a href="{{ path('app_lessons_new') }}"><i class="icon-plus-circle2" style="font-size: 30px; color: #4caf50;"></i></a>
+        {% endif %}
+    </div>
+
+        <div class="content">
+            <div class="row">
+                {% for lesson in lessons %}
+                    {% if lesson.matire == matire %}
+                        <div class="card-img-actions">
+                            <div class="card-img-actions-overlay card-img-top">
+                                <a href="#" class="btn btn-outline bg-white text-white border-white border-2 btn-icon rounded-round">
+                                    <i class="icon-plus3"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-sm-6">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <a href="../../../../uploads/pdf/{{ lesson.lesson }}" target="_blank">
+                                        <img src="../../../../global_assets/images/pdf.jpg" width="100" height="100" class="rounded-circle" alt="" />
+                                    </a>
+                                    <h6 class="font-weight-semibold mb-0">{{lesson.title}}</h6>
+                                    {% if is_granted('ROLE_DIRECTEUR') or is_granted('ROLE_PROFESSEUR') %}
+                                        <div class="list-icons list-icons-extended mt-3">
+                                            <a href="{{ path('app_lessons_edit', {'id': lesson.id}) }}" class="list-icons-item"><i class="icon-pencil7" style="font-size: 20px; color: #4caf50;"></i></a>
+                                            {{ include('lessons/_delete_form.html.twig') }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        <div>
+
+</div>
+
+{% endblock %}
